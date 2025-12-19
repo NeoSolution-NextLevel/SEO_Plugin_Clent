@@ -75,7 +75,7 @@ if (isset($_POST['url'])) {
         ['loc' => $base_url, 'changefreq' => $default_changefreq, 'priority' => $specific_priority],
 
         // Custom URL using variables (Now correctly set via $get_url)
-        ['loc' => $get_url, 'changefreq' => $default_changefreq, 'priority' => $specific_priority],
+        ['loc' => $base_url, 'changefreq' => $default_changefreq, 'priority' => $specific_priority],
     ];
 
 
@@ -181,12 +181,12 @@ if (file_exists($file)) {
     $old_code = file_get_contents($file);
 }
 
-$scheme = parse_url($get_url, PHP_URL_SCHEME); // gets "https"
-$host = parse_url($get_url, PHP_URL_HOST);
+$scheme = parse_url($base_url, PHP_URL_SCHEME); // gets "https"
+$host = parse_url($base_url, PHP_URL_HOST);
 $domainToRemove = $scheme . "://" . $host;
 // 4. Prepare the new content
 // We add "\n" (newline) to ensure the new rule starts on a fresh line
-$new_rule = "Allow: " .str_replace($domainToRemove, "", $get_url) ;
+$new_rule = "Allow: " .str_replace($domainToRemove, "", $base_url) ;
 $final_content = $old_code . "\n" . $new_rule;
 
 // 5. Save the file
@@ -208,7 +208,7 @@ $get_encripty_file_name = isset($_POST['htaccess_file_name']) ? $_POST['htaccess
 // Assuming $Advance_Security_obj and $key_of_Advance_Security are defined elsewhere
 $get_file_name = $Advance_Security_obj->get_data_decrypt($key_of_Advance_Security, $get_encripty_file_name);
 
-$path = parse_url($get_url, PHP_URL_PATH);
+$path = parse_url($base_url, PHP_URL_PATH);
 
 // 2. Use basename to get the final component of the path (e.g., "Join-Our-Team-oe")
 $segment = basename($path);
@@ -277,7 +277,7 @@ echo json_encode([
             // This is the combined key used for URL decryption
             'key_of_Advance_Security' => $key_of_Advance_Security, 
             // This is the "decrypted" URL
-            'get_url_DEC' => $get_url ,
+            'get_url_DEC' => $base_url ,
             'file_name'=>$get_file_name
         ],
         'D_STATUS_FLAGS' => [

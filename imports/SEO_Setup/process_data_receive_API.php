@@ -58,7 +58,7 @@ if (isset($_POST['url'])) {
     $specific_priority = isset($_POST['site_map_priority']) ? $_POST['site_map_priority'] : '0.5';
 
     // --- Standard Settings ---
-    $base_url = $get_url;
+    $base_url = str_replace("\\", "", $get_url);
     // NOTE: Using a relative path for the sitemap file. Adjust as needed.
     $sitemap_file = "../../sitemap.xml"; 
     $default_changefreq = 'daily';

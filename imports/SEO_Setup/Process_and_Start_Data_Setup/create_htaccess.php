@@ -28,7 +28,7 @@ $htaccess_content = <<<HTACCESS
 # --- BEGIN HTAACCESS REDIRECTS ---
 # Ensures all traffic is served over HTTPS and uses the www subdomain.
 
-<IfModule mod_rewrite.c>
+
     RewriteEngine On
 
     # 1. Check if the current host is NOT www. OR if the request is NOT HTTPS
@@ -43,7 +43,7 @@ $htaccess_content = <<<HTACCESS
     # 3. Redirect to the canonical URL: https://www.THE_DOMAIN/{path}
     # [L]ast rule, [R=301] permanent redirect, [NE] no escaping
     RewriteRule ^(.*)$ https://www.%1%{REQUEST_URI} [L,R=301,NE]
-</IfModule>
+
 
 # --- END HTAACCESS REDIRECTS ---
 HTACCESS;
